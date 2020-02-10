@@ -1,0 +1,173 @@
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+
+CREATE TABLE SisTipoEquipamento (
+	CodigoTipoEquipamento int IDENTITY(1,1) NOT NULL,
+	Descricao varchar(255) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	CodigoTipoEquipamento ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+GO
+
+
+CREATE TABLE SisPerfilFuncionario(
+	CodigoPerfilFuncionario int IDENTITY(1,1) NOT NULL,
+	Descricao varchar(255) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	CodigoPerfilFuncionario ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+GO
+
+
+
+CREATE TABLE Cliente(
+	ClienteId int IDENTITY(1,1) NOT NULL,
+	Nome varchar(200) NULL,
+	CpfCnpj varchar(15) NULL,
+	EndBairro varchar(200) NULL,
+	EndCidade varchar(200) NULL,
+	EndEstado varchar(200) NULL,
+	EndLogradouro varchar(200) NULL,
+	EndNumero int NULL,
+	EndComplemento varchar(200) NULL,
+	EndCep varchar(12) NULL,
+	EndProntoRef varchar(200) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	ClienteId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+
+
+CREATE TABLE Equipamento(
+	EquipamentoId int IDENTITY(1,1) NOT NULL,
+	ClienteId int NOT NULL,
+	CodigoTipoEquipamento int NOT NULL,
+	Nome varchar(200) NULL,
+	odelo varchar(200) NULL,
+	Tipo varchar(200) NULL,
+	DataUltimaVisita date NULL,
+	DataProximaVisita date NULL,
+	Estado varchar(100) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	EquipamentoId ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON PRIMARY
+) ON PRIMARY
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE Equipamento  WITH CHECK ADD  CONSTRAINT ClienteId FOREIGN KEY(ClienteId)
+REFERENCES Cliente (ClienteId)
+GO
+
+ALTER TABLE Equipamento CHECK CONSTRAINT ClienteId
+GO
+
+ALTER TABLE Equipamento  WITH CHECK ADD  CONSTRAINT CodigoTipoEquipamento FOREIGN KEY(CodigoTipoEquipamento)
+REFERENCES SisTipoEquipamento (CodigoTipoEquipamento)
+GO
+
+ALTER TABLE Equipamento CHECK CONSTRAINT CodigoTipoEquipamento
+GO
+
+CREATE TABLE Funcionario(
+	FuncionarioId] [int] IDENTITY(1,1) NOT NULL,
+	Nome [varchar](255) NULL,
+	Email [varchar](255) NULL,
+	UserId [int] NULL,
+	Funcao [varchar](255) NULL,
+	CodigoPerfilFuncionario] [int] NULL,
+	Cpf] [varchar](15) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[FuncionarioId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[Funcionario]  WITH CHECK ADD  CONSTRAINT [CodigoPerfilFuncionario] FOREIGN KEY([CodigoPerfilFuncionario])
+REFERENCES [dbo].[SisPerfilFuncionario] ([CodigoPerfilFuncionario])
+GO
+
+ALTER TABLE [dbo].[Funcionario] CHECK CONSTRAINT [CodigoPerfilFuncionario]
+GO
+
+
+
+CREATE TABLE [dbo].[OrdemServico](
+	[OrdemServicoId] [int] IDENTITY(1,1) NOT NULL,
+	[FKFuncionarioId] [int] NULL,
+	[FKEquipamentoId] [int] NULL,
+	[FKClienteId] [int] NULL,
+	[Titulo] [varchar](255) NULL,
+	[DataChamado] [date] NULL,
+	[Periodo] [varchar](255) NULL,
+	[Pago] [bit] NULL,
+	[DataAtendimento] [date] NULL,
+	[NumeroOS] [int] NULL,
+	[Descricao] [varchar](255) NULL,
+	[AvariaPreExistente] [varchar](255) NULL,
+	[ParecerTecnico] [varchar](255) NULL,
+	[PrecoPecas] [float] NULL,
+	[PrecoMaoObra] [float] NULL,
+	[PrecoTotal] [float] NULL,
+	[Desconto] [float] NULL,
+	[PQLocalLimpo] [bit] NULL,
+	[PQCompriuHorario] [bit] NULL,
+	[PQDuvidasEsclarecidas] [bit] NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[OrdemServicoId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[OrdemServico]  WITH CHECK ADD  CONSTRAINT [FKClienteId] FOREIGN KEY([FKClienteId])
+REFERENCES [dbo].[Cliente] ([ClienteId])
+GO
+
+ALTER TABLE [dbo].[OrdemServico] CHECK CONSTRAINT [FKClienteId]
+GO
+
+ALTER TABLE [dbo].[OrdemServico]  WITH CHECK ADD  CONSTRAINT [FKEquipamentoId] FOREIGN KEY([FKEquipamentoId])
+REFERENCES [dbo].[Equipamento] ([EquipamentoId])
+GO
+
+ALTER TABLE [dbo].[OrdemServico] CHECK CONSTRAINT [FKEquipamentoId]
+GO
+
+ALTER TABLE [dbo].[OrdemServico]  WITH CHECK ADD  CONSTRAINT [FKFuncionarioId] FOREIGN KEY([FKFuncionarioId])
+REFERENCES [dbo].[Funcionario] ([FuncionarioId])
+GO
+
+ALTER TABLE [dbo].[OrdemServico] CHECK CONSTRAINT [FKFuncionarioId]
+GO
+
+
+
+

@@ -1,0 +1,125 @@
+﻿@model SistemaOrdemServico.Common.DashboardPageModel
+@{
+    ViewData["Title"] = "Dashboard";
+    ViewData["PageId"] = "Dashboard";
+}
+
+@section Head {
+@Html.StyleBundle("Pages/Dashboard")
+@Html.ScriptBundle("Pages/Dashboard")
+}
+
+@section ContentHeader {
+    <h1>@LocalText.Get("Navigation.Dashboard")</h1>
+}
+
+<!-- Small boxes (Stat box) -->
+<div class="row">
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-aqua">
+            <div class="inner">
+                <h3>@Model.QtdeOdermServicoAberto</h3>
+                <p>Ordem de serviços abertos</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-bag"></i>
+            </div>
+            <a href="/SistemaOS/OrdemServico" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@Model.QtdeOdermServicoFechado</h3>
+                <p>Ordem de serviços fechados</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="SistemaOS/OrdemServico" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>@Model.QtdeOdermServicoAndamento</h3>
+                <p>OS em andamento</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="SistemaOS/OrdemServico" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-3 col-xs-6">
+        <!-- small box -->
+        <div class="small-box bg-red">
+            <div class="inner">
+                <h3>@Model.QtdeOdermServicoMes</h3>
+                <p>Total de OS no mês </p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+            </div>
+            <a href="SistemaOS/OrdemServico" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+</div><!-- /.row -->
+<div class="row">
+    <div class="col-lg-6 col-xs-12">
+        <!-- small box -->
+        <div class="small-box bg-green">
+            <div class="inner">
+                <h3>@Model.QtdeNaoDirecionado</h3>
+                <p>Quantidade de serviços não direcionados</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-stats-bars"></i>
+            </div>
+            <a href="Dashboard/RedirecionarOs" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+    <div class="col-lg-6 col-xs-12">
+        <!-- small box -->
+        <div class="small-box bg-yellow">
+            <div class="inner">
+                <h3>@Model.QtdeOdermServicoAndamento</h3>
+                <p>Quantidade de funcionários ociosos</p>
+            </div>
+            <div class="icon">
+                <i class="ion ion-person-add"></i>
+            </div>
+            <a href="Dashboard/RedirecionarOs" class="small-box-footer">Visualizar <i class="fa fa-arrow-circle-right"></i></a>
+        </div>
+    </div><!-- ./col -->
+</div>
+
+<!-- Main row -->
+<div class="row">
+    <!-- Left col -->
+    <section class="col-lg-12 connectedSortable">
+      
+        <!-- Calendar -->
+        <div class="box box-solid bg-green-gradient">
+            <div class="box-header">
+                <i class="fa fa-calendar"></i>
+                <h3 class="box-title">Calendário</h3>
+                <!-- tools box -->
+                <div class="pull-right box-tools">
+                    <!-- button with a dropdown -->
+                    
+                    <button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                    <button class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                </div><!-- /. tools -->
+            </div><!-- /.box-header -->
+            <div class="box-body no-padding">
+                <!--The calendar -->
+                <div id="calendar" style="width: 100%"></div>
+            </div><!-- /.box-body -->
+           
+        </div><!-- /.box -->
+    </section><!-- right col -->
+</div><!-- /.row (main row) -->

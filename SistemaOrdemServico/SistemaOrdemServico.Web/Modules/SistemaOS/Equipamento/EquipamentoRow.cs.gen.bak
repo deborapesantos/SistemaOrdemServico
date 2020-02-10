@@ -1,0 +1,201 @@
+﻿
+namespace SistemaOrdemServico.SistemaOS.Entities
+{
+    using Serenity;
+    using Serenity.ComponentModel;
+    using Serenity.Data;
+    using Serenity.Data.Mapping;
+    using System;
+    using System.ComponentModel;
+    using System.IO;
+
+    [ConnectionKey("SistemaOS"), Module("SistemaOS"), TableName("[dbo].[Equipamento]")]
+    [DisplayName("Equipamento"), InstanceName("Equipamento")]
+    [ReadPermission("Administration:General")]
+    [ModifyPermission("Administration:General")]
+    public sealed class EquipamentoRow : Row, IIdRow, INameRow
+    {
+        [DisplayName("Equipamento Id"), Identity]
+        public Int32? EquipamentoId
+        {
+            get { return Fields.EquipamentoId[this]; }
+            set { Fields.EquipamentoId[this] = value; }
+        }
+
+        [DisplayName("Cliente"), NotNull, ForeignKey("[dbo].[Cliente]", "ClienteId"), LeftJoin("jCliente"), TextualField("ClienteNome")]
+        public Int32? ClienteId
+        {
+            get { return Fields.ClienteId[this]; }
+            set { Fields.ClienteId[this] = value; }
+        }
+
+        [DisplayName("Codigo Tipo Equipamento"), NotNull, ForeignKey("[dbo].[SisTipoEquipamento]", "CodigoTipoEquipamento"), LeftJoin("jCodigoTipoEquipamento"), TextualField("CodigoTipoEquipamentoDescricao")]
+        public Int32? CodigoTipoEquipamento
+        {
+            get { return Fields.CodigoTipoEquipamento[this]; }
+            set { Fields.CodigoTipoEquipamento[this] = value; }
+        }
+
+        [DisplayName("Nome"), Size(200), QuickSearch]
+        public String Nome
+        {
+            get { return Fields.Nome[this]; }
+            set { Fields.Nome[this] = value; }
+        }
+
+        [DisplayName("Modelo"), Size(200)]
+        public String Modelo
+        {
+            get { return Fields.Modelo[this]; }
+            set { Fields.Modelo[this] = value; }
+        }
+
+        [DisplayName("Tipo"), Size(200)]
+        public String Tipo
+        {
+            get { return Fields.Tipo[this]; }
+            set { Fields.Tipo[this] = value; }
+        }
+
+        [DisplayName("Data Ultima Visita")]
+        public DateTime? DataUltimaVisita
+        {
+            get { return Fields.DataUltimaVisita[this]; }
+            set { Fields.DataUltimaVisita[this] = value; }
+        }
+
+        [DisplayName("Data Proxima Visita")]
+        public DateTime? DataProximaVisita
+        {
+            get { return Fields.DataProximaVisita[this]; }
+            set { Fields.DataProximaVisita[this] = value; }
+        }
+
+        [DisplayName("Estado"), Size(100)]
+        public String Estado
+        {
+            get { return Fields.Estado[this]; }
+            set { Fields.Estado[this] = value; }
+        }
+
+        [DisplayName("Cliente Nome"), Expression("jCliente.[Nome]")]
+        public String ClienteNome
+        {
+            get { return Fields.ClienteNome[this]; }
+            set { Fields.ClienteNome[this] = value; }
+        }
+
+        [DisplayName("Cliente Cpf Cnpj"), Expression("jCliente.[CpfCnpj]")]
+        public String ClienteCpfCnpj
+        {
+            get { return Fields.ClienteCpfCnpj[this]; }
+            set { Fields.ClienteCpfCnpj[this] = value; }
+        }
+
+        [DisplayName("Cliente End Bairro"), Expression("jCliente.[EndBairro]")]
+        public String ClienteEndBairro
+        {
+            get { return Fields.ClienteEndBairro[this]; }
+            set { Fields.ClienteEndBairro[this] = value; }
+        }
+
+        [DisplayName("Cliente End Cidade"), Expression("jCliente.[EndCidade]")]
+        public String ClienteEndCidade
+        {
+            get { return Fields.ClienteEndCidade[this]; }
+            set { Fields.ClienteEndCidade[this] = value; }
+        }
+
+        [DisplayName("Cliente End Estado"), Expression("jCliente.[EndEstado]")]
+        public String ClienteEndEstado
+        {
+            get { return Fields.ClienteEndEstado[this]; }
+            set { Fields.ClienteEndEstado[this] = value; }
+        }
+
+        [DisplayName("Cliente End Logradouro"), Expression("jCliente.[EndLogradouro]")]
+        public String ClienteEndLogradouro
+        {
+            get { return Fields.ClienteEndLogradouro[this]; }
+            set { Fields.ClienteEndLogradouro[this] = value; }
+        }
+
+        [DisplayName("Cliente End Numero"), Expression("jCliente.[EndNumero]")]
+        public Int32? ClienteEndNumero
+        {
+            get { return Fields.ClienteEndNumero[this]; }
+            set { Fields.ClienteEndNumero[this] = value; }
+        }
+
+        [DisplayName("Cliente End Complemento"), Expression("jCliente.[EndComplemento]")]
+        public String ClienteEndComplemento
+        {
+            get { return Fields.ClienteEndComplemento[this]; }
+            set { Fields.ClienteEndComplemento[this] = value; }
+        }
+
+        [DisplayName("Cliente End Cep"), Expression("jCliente.[EndCep]")]
+        public String ClienteEndCep
+        {
+            get { return Fields.ClienteEndCep[this]; }
+            set { Fields.ClienteEndCep[this] = value; }
+        }
+
+        [DisplayName("Cliente End Pronto Ref"), Expression("jCliente.[EndProntoRef]")]
+        public String ClienteEndProntoRef
+        {
+            get { return Fields.ClienteEndProntoRef[this]; }
+            set { Fields.ClienteEndProntoRef[this] = value; }
+        }
+
+        [DisplayName("Codigo Tipo Equipamento Descricao"), Expression("jCodigoTipoEquipamento.[Descricao]")]
+        public String CodigoTipoEquipamentoDescricao
+        {
+            get { return Fields.CodigoTipoEquipamentoDescricao[this]; }
+            set { Fields.CodigoTipoEquipamentoDescricao[this] = value; }
+        }
+
+        IIdField IIdRow.IdField
+        {
+            get { return Fields.EquipamentoId; }
+        }
+
+        StringField INameRow.NameField
+        {
+            get { return Fields.Nome; }
+        }
+
+        public static readonly RowFields Fields = new RowFields().Init();
+
+        public EquipamentoRow()
+            : base(Fields)
+        {
+        }
+
+        public class RowFields : RowFieldsBase
+        {
+            public Int32Field EquipamentoId;
+            public Int32Field ClienteId;
+            public Int32Field CodigoTipoEquipamento;
+            public StringField Nome;
+            public StringField Modelo;
+            public StringField Tipo;
+            public DateTimeField DataUltimaVisita;
+            public DateTimeField DataProximaVisita;
+            public StringField Estado;
+
+            public StringField ClienteNome;
+            public StringField ClienteCpfCnpj;
+            public StringField ClienteEndBairro;
+            public StringField ClienteEndCidade;
+            public StringField ClienteEndEstado;
+            public StringField ClienteEndLogradouro;
+            public Int32Field ClienteEndNumero;
+            public StringField ClienteEndComplemento;
+            public StringField ClienteEndCep;
+            public StringField ClienteEndProntoRef;
+
+            public StringField CodigoTipoEquipamentoDescricao;
+        }
+    }
+}
